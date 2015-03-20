@@ -17,5 +17,5 @@ list.files()
 ```
 
 data.txt consists results of analysis.
-run_analysis.R shows how the data science was made.
+run_analysis.R shows how the data science was made.  
 Original dataset can be found in .zip and unpacked in folder.

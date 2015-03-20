@@ -16,11 +16,12 @@ list.files()
 ## [1] "data.txt"                                
 ## [2] "getdata_projectfiles_UCI HAR Dataset.zip"
 ## [3] "Readme.html"                             
-## [4] "Readme.Rmd"                              
-## [5] "run_analysis.R"                          
-## [6] "UCI HAR Dataset"
+## [4] "Readme.md"                               
+## [5] "Readme.Rmd"                              
+## [6] "run_analysis.R"                          
+## [7] "UCI HAR Dataset"
 ```
 
 data.txt consists results of analysis.
-run_analysis.R shows how the data science was made.
+run_analysis.R shows how the data science was made.  
 Original dataset can be found in .zip and unpacked in folder.

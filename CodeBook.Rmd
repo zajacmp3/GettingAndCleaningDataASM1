@@ -1,44 +1,77 @@
-#Read labels
-labels <- read.csv("UCI HAR Dataset/features.txt", sep="", header = FALSE)
+---
+title: "CodeBook"
+author: "Mateusz Zajac"
+date: "20.03.2015"
+output: 
+  html_document:
+    keep_md: true
+---
 
+##Reading labels for files:
+```{r}
+labels <- read.csv("UCI HAR Dataset/features.txt", sep="", header = FALSE)
+str(labels)
+```
+
+#Reading original data files
 ##Traning
-#Read traning data and assign labels
+###Read traning data and assign labels
+```{r}
 dataTrain <- read.csv("UCI HAR Dataset/train/X_train.txt", sep = "", header = FALSE, col.names = labels[,2])
-#load and assign test subjects
+```
+###load and assign test subjects
+```{r}
 testSubjects <- read.csv(file = "UCI HAR Dataset/train/subject_train.txt", sep = "", header = FALSE, col.names = "subject")
 dataTrain$subject <- testSubjects[,1]
-#load and assign traning type labels
+```
+###load and assign traning type labels
+```{r}
 traningType <- read.csv(file = "UCI HAR Dataset/train/y_train.txt", sep = "", header = FALSE, col.names = "label")
 dataTrain$label <- traningType[,1]
+```
 
 ##Test
-#Read traning data and assign labels
+###Read traning data and assign labels
+```{r}
 dataTest <- read.csv("UCI HAR Dataset/test/X_test.txt", sep = "", header = FALSE, col.names = labels[,2])
-#load and assign test subjects
+```
+###load and assign test subjects
+```{r}
 testSubjects <- read.csv(file = "UCI HAR Dataset/test/subject_test.txt", sep = "", header = FALSE, col.names = "subject")
 dataTest$subject <- testSubjects[,1]
-#load and assign traning type labels
+```
+###load and assign traning type labels
+```{r}
 traningType <- read.csv(file = "UCI HAR Dataset/test/y_test.txt", sep = "", header = FALSE, col.names = "label")
 dataTest$label <- traningType[,1]
+```
 
-##Clean
+#Description of progress
+At this point files are loaded into R. They are labeled properly. Next is merging and cleaning enviroment variables.
+
+```{r echo=FALSE} 
 rm(testSubjects)
 rm(traningType)
+```
 
 ##Merge - add rows
+```{r}
 names <- seq(from = nrow(dataTrain) + 1, length.out = nrow(dataTest))
 rownames(dataTest) <- make.names(names, unique = TRUE)
 names <- seq(from = nrow(dataTrain), length.out = nrow(dataTrain))
 rownames(dataTrain) <- make.names(names, unique = TRUE)
 data <- rbind(dataTrain, dataTest)
+```
 
-##Clean
+```{r echo=FALSE}
 rm(names)
 rm(dataTest)
 rm(dataTrain)
 rm(labels)
+```
 
 #Build sequence of columns to extract
+```{r}
 nseq <- c()
 for(i in seq(as.integer(563 / 40))) { 
   nseq <- c(nseq, seq(from = ((i - 1) * 40 + 1), length.out = 6))
@@ -46,19 +79,26 @@ for(i in seq(as.integer(563 / 40))) {
 
 selectedData <- data[,c(nseq,562,563)]
 selectedData$label <- as.character(selectedData$label)
+```
 
 #load activity labels
+```{r}
 activityLabels <- read.csv(file = "UCI HAR Dataset/activity_labels.txt", header = FALSE, sep = "")
 activityLabels$V2 <- as.character(activityLabels$V2)
+```
 
 #replace label numbers with names
+```{r}
 apply(activityLabels, 1, function(row) {selectedData$label[selectedData$label == as.character(row[1])] <<- row[2]})
+```
 
-##Clean
+```{r echo=FALSE}
 rm(nseq)
 rm(i)
-
+```
 ##Calculate the average of each variable for each activity and each subject.
+
+```{r message=FALSE, warning=FALSE}
 calculatedData <- selectedData[0,]
 for(i in 1:30) {
   temp <- selectedData[selectedData$subject == i,]
@@ -73,6 +113,17 @@ for(i in 1:30) {
     }
   }
 }
+```
 
 ##Save to file
+```{r eval=FALSE, echo=FALSE}
 write.table(x = calculatedData, file = "data.txt", sep = " ", row.names = FALSE)
+```
+
+#Calculated fields
+At the end we get a mean for each observation for each subject and its activity type.
+
+```{r echo=FALSE}
+head(calculatedData, n=1)
+tail(calculatedData, n=1)
+```

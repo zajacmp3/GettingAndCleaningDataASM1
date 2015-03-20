@@ -62,14 +62,20 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <p>Results here are a part of analysis of data from link: <a href="http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones">http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones</a></p>
 <p>list of files:</p>
 <pre class="r"><code>list.files()</code></pre>
-<pre><code>## [1] &quot;data.txt&quot;                                
-## [2] &quot;getdata_projectfiles_UCI HAR Dataset.zip&quot;
-## [3] &quot;Readme.html&quot;                             
-## [4] &quot;Readme.md&quot;                               
-## [5] &quot;Readme.Rmd&quot;                              
-## [6] &quot;run_analysis.R&quot;                          
-## [7] &quot;UCI HAR Dataset&quot;</code></pre>
+<pre><code>##  [1] &quot;CodeBook.html&quot;                           
+##  [2] &quot;CodeBook.md&quot;                             
+##  [3] &quot;CodeBook.Rmd&quot;                            
+##  [4] &quot;data.txt&quot;                                
+##  [5] &quot;getdata_projectfiles_UCI HAR Dataset.zip&quot;
+##  [6] &quot;Readme.html&quot;                             
+##  [7] &quot;Readme.md&quot;                               
+##  [8] &quot;Readme.Rmd&quot;                              
+##  [9] &quot;run_analysis.R&quot;                          
+## [10] &quot;UCI HAR Dataset&quot;</code></pre>
 <p>data.txt consists results of analysis. run_analysis.R shows how the data science was made.<br />Original dataset can be found in .zip and unpacked in folder.</p>
+<p>Please look at CodeBook.md to see the details about how analysis was performed.</p>
+<p>Analysis meant to read the data from files and merge train data (which is 70% of all) and test data (which is 30% of all) and then extract only mean and starndard deviation columns.</p>
+<p>With this columns assigned for each activity type and subject a average for each observation was calculated on each column for each subject and its activity type. Results shows average values for each subject and its activity.</p>
 
 
 </div>
